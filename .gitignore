@@ -1,0 +1,221 @@
+# ============================================
+# 민감 정보 및 시크릿
+# ============================================
+# 환경 변수 파일
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Kubernetes Secret 파일 (실제 값이 포함된 파일)
+deploy/k8s/overlays/*/secret.yaml
+# 예제 파일은 포함 (secret.yaml.example은 Git에 포함)
+
+# ============================================
+# Python
+# ============================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+.ENV
+
+# PyCharm
+.idea/
+
+# ============================================
+# Node.js
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# 패키지 관리자 잠금 파일 (선택사항 - 프로젝트 정책에 따라)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ============================================
+# Flutter / Dart
+# ============================================
+# Flutter/Dart/Pub 관련
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+# Flutter 웹 빌드 결과물은 제외하지 않을 수도 있음 (프로젝트 정책에 따라)
+# apps/web-flutter/build/
+
+# ============================================
+# IDE 및 에디터
+# ============================================
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Vim
+*.swp
+*.swo
+*~
+.vim/
+
+# Emacs
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# ============================================
+# OS 관련
+# ============================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# Docker
+# ============================================
+# Docker 관련 파일은 일반적으로 Git에 포함하지만,
+# 로컬 개발용 docker-compose.override.yml은 제외할 수 있음
+docker-compose.override.yml
+
+# ============================================
+# Kubernetes
+# ============================================
+# 로컬 kubeconfig (선택사항)
+.kube/config.local
+
+# ============================================
+# 빌드 및 배포
+# ============================================
+# 빌드 아티팩트
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# 로그 파일
+*.log
+logs/
+*.log.*
+
+# 임시 파일
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*.swo
+
+# ============================================
+# 테스트 및 커버리지
+# ============================================
+# Python
+.coverage
+.pytest_cache/
+.tox/
+.hypothesis/
+htmlcov/
+*.cover
+*.py,cover
+
+# Node.js
+coverage/
+.nyc_output/
+*.lcov
+
+# ============================================
+# 기타
+# ============================================
+# 로컬 설정 파일
+local_settings.py
+local_config.json
+
+# 데이터베이스
+*.db
+*.sqlite
+*.sqlite3
+
+# 압축 파일
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
