@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kpmg-poc
+  namespace: kpmg-poc
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: kpmg-poc.local
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: bff
+                port:
+                  number: 3000
+          - path: /flutter
+            pathType: Prefix
+            backend:
+              service:
+                name: web-flutter
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-react
+                port:
+                  number: 80

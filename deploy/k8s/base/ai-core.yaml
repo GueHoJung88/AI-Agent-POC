@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-core
+  namespace: kpmg-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ai-core
+  template:
+    metadata:
+      labels:
+        app: ai-core
+    spec:
+      containers:
+        - name: ai-core
+          image: ai-core:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - secretRef:
+                name: ai-core-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-core
+  namespace: kpmg-poc
+spec:
+  selector:
+    app: ai-core
+  ports:
+    - port: 9000
+      targetPort: 8000
