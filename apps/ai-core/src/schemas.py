@@ -1,5 +1,6 @@
-from pydantic import BaseModel
-from typing import Any, Optional
+from pydantic import BaseModel, Field
+from typing import Any, Optional, List
+from uuid import UUID
 
 class ChatRequest(BaseModel):
     user_id: str = "demo"
@@ -10,7 +11,9 @@ class ChatRequest(BaseModel):
 class Citation(BaseModel):
     doc_title: str
     page: int | None = None
-    file_path: str | None = None
+    # START: API 호환 유지 - 내부는 doc_path지만 응답은 file_path로 내려감
+    file_path: Optional[str] = None
+    # END: API 호환 유지
     score: float
 
 class ChatResponse(BaseModel):
@@ -19,6 +22,9 @@ class ChatResponse(BaseModel):
     answer: str
     citations: list[Citation]
     timings: dict[str, Any]
+    # START: feedback 정석 지원 - query_log_id 포함
+    query_log_id: str
+    # END: feedback 정석 지원
 
 class ReportRequest(BaseModel):
     user_id: str = "demo"
@@ -32,11 +38,35 @@ class ReportResponse(BaseModel):
     report_json: str
     citations: list[Citation]
     timings: dict[str, Any]
+    # START: feedback 정석 지원 - query_log_id 포함
+    query_log_id: str
+    # END: feedback 정석 지원
 
 class FeedbackRequest(BaseModel):
-    query_log_id: str
-    rating: int | None = None
-    is_helpful: bool | None = None
-    is_grounded: bool | None = None
-    comment: str | None = None
+    """
+    rag_feedback 테이블 스키마(사용자 제공) 반영:
+      rag_feedback(
+        id uuid pk,
+        created_at timestamptz default now(),
+        query_log_id uuid not null references rag_query_log on delete cascade,
+        user_id text,
+        rating integer,
+        is_helpful boolean,
+        feedback_text text,
+        tags text[],
+        expected_answer text,
+        chosen_evidence_ids uuid[]
+      )
+    """
+    query_log_id: UUID
+    user_id: Optional[str] = None
+    rating: Optional[int] = None
+    is_helpful: Optional[bool] = None
+
+    # START: DB 스키마 반영 필드
+    feedback_text: Optional[str] = None
+    tags: Optional[List[str]] = None
+    expected_answer: Optional[str] = None
+    chosen_evidence_ids: Optional[List[UUID]] = None
+    # END: DB 스키마 반영 필드
 

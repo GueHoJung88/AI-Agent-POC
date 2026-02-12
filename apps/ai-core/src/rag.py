@@ -6,9 +6,25 @@ def retrieve_pgvector(query_vec: list[float], doc_group: str, top_k: int) -> lis
     """
     cosine distance: embedding <=> query_vec
     score = 1 - distance
+
+    PostgreSQL + pgvector 기반 검색.
+
+    DB 스키마(사용자 제공):
+      rag_chunks(id, doc_title, doc_group, section, page, content, embedding, created_at, doc_path, doc_hash, chunk_hash)
+
+    NOTE:
+      - API/프론트에서 "file_path"로 기대하는 경우가 많아서,
+        DB의 doc_path를 file_path로 alias 한다.
     """
+    
     sql = """
-    SELECT id, content, doc_title, page, file_path,
+    SELECT  id,
+            content,
+            doc_title,
+            page,
+            -- START: DB 스키마 반영 (rag_chunks에는 file_path가 없고 doc_path가 있다)
+            doc_path AS file_path,
+            -- END: DB 스키마 반영
            1 - (embedding <=> %s::vector) AS score
     FROM rag_chunks
     WHERE doc_group = %s

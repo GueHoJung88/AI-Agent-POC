@@ -15,13 +15,21 @@ def get_client():
 
 def chat_completion(system: str, user: str, max_tokens: int = 900, temperature: float = 0.2) -> str:
     client = get_client()
-    resp = client.chat.completions.create(
-        model=settings.azure_deployment,
-        messages=[
-            {"role": "system", "content": system},
-            {"role": "user", "content": user},
-        ],
-        temperature=temperature,
-        max_tokens=max_tokens,
-    )
-    return resp.choices[0].message.content
+    # === START: debug azure error ===
+    try:
+        resp = client.chat.completions.create(
+            model=settings.azure_deployment,
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            temperature=temperature,
+            max_tokens=max_tokens,
+        )
+        return resp.choices[0].message.content
+    except Exception as e:
+        import traceback
+        print("AZURE ERROR RAW:", repr(e))
+        traceback.print_exc()
+        raise
+    # === END: debug azure error ===

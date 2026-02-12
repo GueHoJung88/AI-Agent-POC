@@ -4,5 +4,13 @@ pydantic==2.8.2
 psycopg[binary]==3.2.1
 pgvector==0.3.2
 openai==1.40.6
+
+# === START: compatibility pin (openai SDK ↔ httpx) ===
+# openai SDK 내부에서 httpx.Client 생성 시 'proxies' 인자를 쓰는 경로가 있고,
+# httpx 0.28.x 계열에서 'proxies' 인자 호환 문제가 보고되어 500(TypeError)이 발생할 수 있음.
+# 따라서 httpx를 0.27.x로 핀해서 AzureOpenAI 클라이언트 생성이 정상 동작하도록 고정한다.
+httpx==0.27.2
+# === END: compatibility pin (openai SDK ↔ httpx) ===
+
 sentence-transformers==3.0.1
 numpy==1.26.4
